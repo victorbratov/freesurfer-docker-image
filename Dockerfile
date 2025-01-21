@@ -100,6 +100,28 @@ RUN export TMPDIR="$(mktemp -d)" \
     && rm -rf "$TMPDIR" \
     && unset TMPDIR
 RUN ln -s /opt/MCRv84/v84 /opt/freesurfer-7.4.1/MCRv84
+
+# Install OpenSSH server
+RUN apt-get update && apt-get install -y openssh-server && \
+    mkdir /var/run/sshd && \
+    echo 'root:password' | chpasswd && \
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
+
+# Copy license.txt and set FS_LICENSE
+COPY license.txt /opt/license.txt
+ENV FS_LICENSE=/opt/license.txt
+
+# Copy /dataset folder and set SUBJECTS_DIR
+COPY dataset /opt/dataset
+ENV SUBJECTS_DIR=/opt/dataset
+
+# Expose SSH port
+EXPOSE 22
+
+# Start SSH server on container launch
+CMD ["/usr/sbin/sshd", "-D"]
+
 ENTRYPOINT ["/neurodocker/startup.sh"]
 
 # Save specification to JSON.
