@@ -67,6 +67,7 @@ RUN unzip -q /usr/local/mcr.zip -d /usr/local/mcrtmp \
 ENV MATLABCMD /opt/MCRv84/2014b/toolbox/matlab
 ENV XAPPLRESDIR /opt//opt/MCRv84/v84/x11/app-defaults
 ENV MCRROOT /opt/MCRv84/2014b
+ENV LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/x86_64-linux-gnu:/opt/MCRv84/v84/runtime/glnxa64:/opt/MCRv84/v84/bin/glnxa64:/opt/MCRv84/v84/sys/os/glnxa64:/opt/MCRv84/v84/extern/bin/glnxa64"
 
 
 ENV SHELL /bin/bash
