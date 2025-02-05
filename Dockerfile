@@ -54,7 +54,7 @@ ENV PERL5LIB /mni/share/perl5
 
 # python path for freesurfer
 RUN mkdir $FREESURFER_HOME/python/bin/ \
-    ln -s $(which python3) $FREESURFER_HOME/python/bin/python
+    ln -s $(which python3) $FREESURFER_HOME/python/bin/python3
 
 # install matlab runtime
 COPY mcr.zip /usr/local/mcr.zip
